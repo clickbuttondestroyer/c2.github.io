@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Игра Кликер</title>
+</head>
+<body>
+
+<h1>Игра Кликер</h1>
+
+<button id="clickButton" onclick="clickHandler()">Нажми меня!</button>
+
+<p id="clickCount">Количество кликов: 0</p>
+<p id="coinCount">Количество монет: 0</p>
+
+<button onclick="saveProgress()">Сохранить прогресс</button>
+<button onclick="resetProgress()">Сбросить прогресс</button>
+
+<script>
+  var clickCount = 0;
+  var coinCount = 0;
+
+  // Загрузка прогресса из локального хранилища
+  if (localStorage.getItem("clickCount")) {
+    clickCount = parseInt(localStorage.getItem("clickCount"));
+    updateClickCount();
+  }
+
+  if (localStorage.getItem("coinCount")) {
+    coinCount = parseInt(localStorage.getItem("coinCount"));
+    updateCoinCount();
+  }
+
+  function clickHandler() {
+    clickCount++;
+    updateClickCount();
+    if (clickCount % 10 === 0) {
+      coinCount++;
+      updateCoinCount();
+    }
+  }
+
+  function updateClickCount() {
+    document.getElementById("clickCount").innerHTML = "Количество кликов: " + clickCount;
+  }
+
+  function updateCoinCount() {
+    document.getElementById("coinCount").innerHTML = "Количество монет: " + coinCount;
+  }
+
+  function saveProgress() {
+    localStorage.setItem("clickCount", clickCount);
+    localStorage.setItem("coinCount", coinCount);
+    alert("Прогресс сохранен!");
+  }
+
+  function resetProgress() {
+    clickCount = 0;
+    coinCount = 0;
+    updateClickCount();
+    updateCoinCount();
+    localStorage.removeItem("clickCount");
+    localStorage.removeItem("coinCount");
+    alert("Прогресс сброшен!");
+  }
+</script>
+
+</body>
+</html>
